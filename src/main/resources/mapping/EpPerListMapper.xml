@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.EpPerListMapper" >
+  <resultMap id="BaseResultMap" type="com.ruiheng.entity.Ep_Per_List" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ep_id" property="epId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <!-- 添加企业关联表人员-->
+  <insert id="addEpPerList">
+    INSERT INTO Ep_Per_List(ep_id,user_id) VALUES(#{epId},#{user_id})
+  </insert>
+</mapper>

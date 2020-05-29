@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.BasDefTypeTMapper" >
+  <resultMap id="BasDefTypeTMap" type="com.ruiheng.entity.BasDefTypeT" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pg_list_id" property="pgListId" jdbcType="VARCHAR" />
+    <result column="pg_type" property="pgType" jdbcType="VARCHAR" />
+    <result column="pg_list_desc" property="pgListDesc" jdbcType="VARCHAR" />
+    <result column="pg_list_en_desc" property="pgListEnDesc" jdbcType="VARCHAR" />
+    <result column="pg_chk_list" property="pgChkList" jdbcType="VARCHAR" />
+    <result column="pg_expires_date" property="pgExpiresDate" jdbcType="TIMESTAMP" />
+    <result column="pg_memo" property="pgMemo" jdbcType="VARCHAR" />
+    <result column="cre_user" property="creUser" jdbcType="VARCHAR" />
+    <result column="cre_date" property="creDate" jdbcType="TIMESTAMP" />
+    <result column="upd_user" property="updUser" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="chk_user" property="chkUser" jdbcType="VARCHAR" />
+    <result column="chk_date" property="chkDate" jdbcType="TIMESTAMP" />
+    <result column="cfm_user" property="cfmUser" jdbcType="VARCHAR" />
+    <result column="cfm_date" property="cfmDate" jdbcType="TIMESTAMP" />
+    <result column="rec_status" property="recStatus" jdbcType="INTEGER" />
+    <result column="rec_id" property="recId" jdbcType="VARCHAR" />
+    <result column="rec_ltd" property="recLtd" jdbcType="VARCHAR" />
+    <result column="rec_step" property="recStep" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 查询1级类目-->
+  <select id="typeAll" resultMap="BasDefTypeTMap">
+      SELECT id,pg_list_desc,pg_type FROM bas_def_type_t WHERE pg_type=1
+  </select>
+  <!-- 查询二级类目-->
+  <select id="typeTwo" resultMap="BasDefTypeTMap">
+    SELECT id,pg_list_desc,pg_type FROM bas_def_type_t WHERE pg_list_id=#{id}
+  </select>
+  <!--查询三级类目-->
+  <select id="typeThree" resultMap="BasDefTypeTMap">
+    SELECT * FROM bas_def_type_t WHERE pg_list_id=#{id} AND rec_ltd=0
+  </select>
+
+  <!--添加类目-只能添加第三级-->
+  <insert id="addBasType">
+    INSERT INTO bas_def_type_t(pg_list_id,pg_list_desc,rec_ltd) VALUES(#{pgListId},#{pgListDesc},#{recLtd});
+  </insert>
+
+  <!-- 显示该公司添加的类目-->
+  <select id="getType" resultMap="BasDefTypeTMap">
+    SELECT * FROM bas_def_type_t WHERE pg_list_id=#{pgListId} AND rec_ltd=#{recLtd}
+  </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.ArtColorTMapper" >
+  <resultMap id="ArtColorTMap" type="com.ruiheng.entity.ArtColorT" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="art_no" property="artNo" jdbcType="INTEGER" />
+    <result column="art_color" property="artColor" jdbcType="VARCHAR" />
+    <result column="art_color_desc" property="artColorDesc" jdbcType="VARCHAR" />
+    <result column="cre_user" property="creUser" jdbcType="VARCHAR" />
+    <result column="cre_date" property="creDate" jdbcType="TIMESTAMP" />
+    <result column="upd_user" property="updUser" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="chk_user" property="chkUser" jdbcType="VARCHAR" />
+    <result column="chk_date" property="chkDate" jdbcType="TIMESTAMP" />
+    <result column="cfm_user" property="cfmUser" jdbcType="VARCHAR" />
+    <result column="cfm_date" property="cfmDate" jdbcType="TIMESTAMP" />
+    <result column="rec_status" property="recStatus" jdbcType="INTEGER" />
+    <result column="rec_id" property="recId" jdbcType="VARCHAR" />
+    <result column="rec_ltd" property="recLtd" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 添加颜色关联- 款式编号和颜色值-->
+  <insert id="addArtColorT">
+    INSERT INTO art_color_t(art_no,art_color,rec_ltd) VALUES(#{artNo},#{artColor},#{recLtd})
+  </insert>
+
+  <!-- 通过款式id查询颜色-->
+  <select id="findArtColorTByArtNo" resultMap="ArtColorTMap">
+      SELECT art_color FROM art_color_t act INNER JOIN art_desc_t adt ON act.art_no=adt.id WHERE adt.id=#{artNo}
+  </select>
+</mapper>

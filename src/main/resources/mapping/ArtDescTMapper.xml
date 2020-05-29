@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.ArtDescTMapper" >
+  <resultMap id="ArtDescTMap" type="com.ruiheng.entity.ArtDescT" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="art_no" property="artNo" jdbcType="VARCHAR" />
+    <result column="art_type" property="artType" jdbcType="VARCHAR" />
+    <result column="art_desc" property="artDesc" jdbcType="VARCHAR" />
+    <result column="art_sam_no" property="artSamNo" jdbcType="VARCHAR" />
+    <result column="art_cust_no" property="artCustNo" jdbcType="VARCHAR" />
+    <result column="art_oth_no" property="artOthNo" jdbcType="VARCHAR" />
+    <result column="art_fab_desc" property="artFabDesc" jdbcType="VARCHAR" />
+    <result column="art_fab_short_type" property="artFabShortType" jdbcType="VARCHAR" />
+    <result column="art__barcode" property="artBarcode" jdbcType="VARCHAR" />
+    <result column="art_uom" property="artUom" jdbcType="VARCHAR" />
+    <result column="art_remark" property="artRemark" jdbcType="VARCHAR" />
+    <result column="art_en_desc" property="artEnDesc" jdbcType="VARCHAR" />
+    <result column="art_en_shtdesc" property="artEnShtdesc" jdbcType="VARCHAR" />
+    <result column="art_expires_date" property="artExpiresDate" jdbcType="TIMESTAMP" />
+    <result column="art_sales_upr" property="artSalesUpr" jdbcType="VARCHAR" />
+    <result column="art_sales1_upr" property="artSales1Upr" jdbcType="VARCHAR" />
+    <result column="art_sales2_upr" property="artSales2Upr" jdbcType="VARCHAR" />
+    <result column="art_sales3_upr" property="artSales3Upr" jdbcType="VARCHAR" />
+    <result column="art_sales4_upr" property="artSales4Upr" jdbcType="VARCHAR" />
+    <result column="art_sales5_upr" property="artSales5Upr" jdbcType="VARCHAR" />
+    <result column="art_sales6_upr" property="artSales6Upr" jdbcType="VARCHAR" />
+    <result column="art_cost_upr" property="artCostUpr" jdbcType="VARCHAR" />
+    <result column="art_cost1_upr" property="artCost1Upr" jdbcType="VARCHAR" />
+    <result column="art_cost2_upr" property="artCost2Upr" jdbcType="VARCHAR" />
+    <result column="cre_user" property="creUser" jdbcType="VARCHAR" />
+    <result column="cre_date" property="creDate" jdbcType="TIMESTAMP" />
+    <result column="upd_user" property="updUser" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="chk_user" property="chkUser" jdbcType="VARCHAR" />
+    <result column="chk_date" property="chkDate" jdbcType="TIMESTAMP" />
+    <result column="cfm_user" property="cfmUser" jdbcType="VARCHAR" />
+    <result column="cfm_date" property="cfmDate" jdbcType="TIMESTAMP" />
+    <result column="rec_status" property="recStatus" jdbcType="INTEGER" />
+    <result column="rec_ltd" property="recLtd" jdbcType="VARCHAR" />
+    <result column="rec_id" property="recId" jdbcType="VARCHAR" />
+    <result column="art_min_qty" property="artMinQty" jdbcType="VARCHAR" />
+    <result column="art_uprice" property="artUprice" jdbcType="VARCHAR" />
+    <result column="art_tk_type" property="artTkType" jdbcType="VARCHAR" />
+    <result column="art_brind" property="artBrind" jdbcType="VARCHAR" />
+    <result column="art_brind_type" property="artBrindType" jdbcType="VARCHAR" />
+    <result column="art_brind_category" property="artBrindCategory" jdbcType="VARCHAR" />
+    <result column="art_size_group" property="artSizeGroup" jdbcType="VARCHAR" />
+    <result column="art_sex" property="artSex" jdbcType="VARCHAR" />
+    <result column="art_series" property="artSeries" jdbcType="VARCHAR" />
+    <result column="art_box_qty" property="artBoxQty" jdbcType="VARCHAR" />
+    <result column="art_season" property="artSeason" jdbcType="VARCHAR" />
+    <result column="art_std_desc" property="artStdDesc" jdbcType="VARCHAR" />
+    <result column="art_std_no" property="artStdNo" jdbcType="VARCHAR" />
+    <result column="art_safety_categoty" property="artSafetyCategoty" jdbcType="VARCHAR" />
+    <result column="art_grade" property="artGrade" jdbcType="VARCHAR" />
+    <result column="art_sec_tech" property="artSecTech" jdbcType="VARCHAR" />
+    <result column="art_std_fab" property="artStdFab" jdbcType="VARCHAR" />
+    <result column="art_std_fab1" property="artStdFab1" jdbcType="VARCHAR" />
+    <result column="art_std_fab2" property="artStdFab2" jdbcType="VARCHAR" />
+    <result column="art_std_fab3" property="artStdFab3" jdbcType="VARCHAR" />
+    <result column="art_std_fab4" property="artStdFab4" jdbcType="VARCHAR" />
+    <result column="art_std_fab5" property="artStdFab5" jdbcType="VARCHAR" />
+    <result column="art_std_fab6" property="artStdFab6" jdbcType="VARCHAR" />
+    <result column="art_std_fab7" property="artStdFab7" jdbcType="VARCHAR" />
+    <result column="art_wms_desc" property="artWmsDesc" jdbcType="VARCHAR" />
+    <result column="art_age" property="artAge" jdbcType="VARCHAR" />
+    <result column="art_wash" property="artWash" jdbcType="VARCHAR" />
+    <result column="art_hx_fab" property="artHxFab" jdbcType="VARCHAR" />
+    <result column="art_wf_type" property="artWfType" jdbcType="VARCHAR" />
+    <result column="art_yh_no" property="artYhNo" jdbcType="VARCHAR" />
+    <result column="art_wf_no" property="artWfNo" jdbcType="VARCHAR" />
+    <result column="art_ch_no" property="artChNo" jdbcType="VARCHAR" />
+    <result column="art_cup_no" property="artCupNo" jdbcType="VARCHAR" />
+    <result column="art_series2" property="artSeries2" jdbcType="VARCHAR" />
+    <result column="art_design_operator" property="artDesignOperator" jdbcType="VARCHAR" />
+    <result column="art_zy_operator" property="artZyOperator" jdbcType="VARCHAR" />
+    <result column="art_mj_operator" property="artMjOperator" jdbcType="VARCHAR" />
+    <result column="art_sew_operator" property="artSewOperator" jdbcType="VARCHAR" />
+    <result column="art_count_uom" property="artCountUom" jdbcType="VARCHAR" />
+    <result column="art_cust_chk_std" property="artCustChkStd" jdbcType="VARCHAR" />
+    <result column="art_size_list" property="artSizeList" jdbcType="VARCHAR" />
+    <result column="art_class" property="artClass" jdbcType="VARCHAR" />
+    <result column="art_color_list" property="artColorList" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+
+  <!-- 添加产品款式-->
+  <insert id="addArtDescT">
+    INSERT INTO art_desc_t(art_no,art_desc,img_url,art_remark,cre_user,rec_ltd)
+    VALUES(#{artNo},#{artDesc},#{imgUrl},#{artRemark},#{creUser},#{recLtd})
+  </insert>
+  
+  <!-- 判断款式编号不能重复-->
+  <select id="findArtDescTByArtNo" resultMap="ArtDescTMap">
+    SELECT COUNT(*) AS 'count',art_no,id,rec_ltd FROM art_desc_t WHERE art_no=#{artNo} AND rec_ltd=#{recLtd}
+  </select>
+
+  <!-- 款式管理- 显示所有公司的款式-->
+  <select id="findByRecLtdAll" resultMap="ArtDescTMap">
+    SELECT
+    img_url,
+    art_no,
+    art_desc,
+    cre_user,
+    art_remark,
+    cre_date
+    FROM art_desc_t
+    WHERE rec_ltd=#{recLtd} AND rec_status=1
+  </select>
+
+</mapper>

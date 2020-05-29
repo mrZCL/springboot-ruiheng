@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.ArtTypeTMapper" >
+  <resultMap id="ArtTypeTMap" type="com.ruiheng.entity.ArtTypeT" >
+    <id column="art_id" property="artId" jdbcType="INTEGER" />
+    <result column="art_type" property="artType" jdbcType="VARCHAR" />
+    <result column="art_parent_id" property="artParentId" jdbcType="VARCHAR" />
+    <result column="art_en_type" property="artEnType" jdbcType="VARCHAR" />
+    <result column="art_chk_key" property="artChkKey" jdbcType="VARCHAR" />
+    <result column="art_expires" property="artExpires" jdbcType="VARCHAR" />
+    <result column="art_type_def" property="artTypeDef" jdbcType="VARCHAR" />
+    <result column="art_plan_day" property="artPlanDay" jdbcType="VARCHAR" />
+    <result column="art_eng_group" property="artEngGroup" jdbcType="VARCHAR" />
+    <result column="art_set_min_qty" property="artSetMinQty" jdbcType="VARCHAR" />
+    <result column="art_plan_eng_qty" property="artPlanEngQty" jdbcType="VARCHAR" />
+    <result column="art_min_time" property="artMinTime" jdbcType="VARCHAR" />
+    <result column="art_category" property="artCategory" jdbcType="VARCHAR" />
+    <result column="cre_user" property="creUser" jdbcType="VARCHAR" />
+    <result column="cre_date" property="creDate" jdbcType="TIMESTAMP" />
+    <result column="upd_user" property="updUser" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="chk_user" property="chkUser" jdbcType="VARCHAR" />
+    <result column="chk_date" property="chkDate" jdbcType="TIMESTAMP" />
+    <result column="cfm_user" property="cfmUser" jdbcType="VARCHAR" />
+    <result column="cfm_date" property="cfmDate" jdbcType="TIMESTAMP" />
+    <result column="rec_status" property="recStatus" jdbcType="INTEGER" />
+    <result column="REC_LTD" property="recLtd" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

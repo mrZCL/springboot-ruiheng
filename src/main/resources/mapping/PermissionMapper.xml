@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.PermissionMapper" >
+  <resultMap id="permissionMap" type="com.ruiheng.entity.Permission" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="permission_id" property="permissionId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="perms" property="perms" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="available" property="available" jdbcType="BIT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="order" property="order" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 查询权限父标题-->
+  <select id="getPermissionParent" resultMap="permissionMap">
+     SELECT id,NAME FROM Permission WHERE parent_id=0
+  </select>
+
+  <!-- 查询权限-->
+  <select id="getPermission" resultMap="permissionMap">
+     SELECT id,NAME
+     FROM permission p WHERE p.parent_id=#{parentId}
+  </select>
+
+  <!-- 查询权限信息- 通过角色id查询-->
+  <select id="findPermissionByRoleId" resultMap="permissionMap">
+     SELECT per.id,per.name,per.url
+     FROM Permission per
+     INNER JOIN role_permission rper
+     ON per.id=rper.permission_id
+     WHERE rper.role_id=#{roleId}
+  </select>
+</mapper>

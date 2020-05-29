@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiheng.mapper.UserMapper">
+   <resultMap id="userMap" type="com.ruiheng.entity.User">
+       <id column="id" property="id" jdbcType="INTEGER" />
+       <result column="user_number" property="userNumber" jdbcType="INTEGER" />
+       <result column="user_name" property="userName" jdbcType="VARCHAR" />
+       <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+       <result column="head_img_url" property="headImgUrl" jdbcType="VARCHAR" />
+       <result column="user_sex" property="userSex" jdbcType="CHAR" />
+       <result column="age" property="age" jdbcType="INTEGER" />
+       <result column="user_id" property="userId" jdbcType="VARCHAR" />
+       <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+       <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+       <result column="user_ep_id" property="userEpId" jdbcType="INTEGER" />
+       <result column="user_roleid" property="userRoleid" jdbcType="VARCHAR" />
+       <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+       <result column="locked" property="locked" jdbcType="BIT" />
+       <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+       <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+       <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+       <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+       <result column="count" property="count" jdbcType="INTEGER" />
+       <association property="role" javaType="com.ruiheng.entity.Role">
+           <id column="id" property="id" jdbcType="INTEGER" />
+           <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+       </association>
+       <association property="enter_prise" javaType="com.ruiheng.entity.Enter_Prise">
+           <id column="id" property="id" jdbcType="INTEGER" />
+           <result column="ep_name" property="epName" jdbcType="VARCHAR" />
+       </association>
+       <association property="department" javaType="com.ruiheng.entity.Department">
+           <id column="id" property="id" jdbcType="INTEGER" />
+           <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+       </association>
+   </resultMap>
+
+    <!-- 查询所有该企业的用户 -->
+    <select id="getAllUser" resultMap="userMap">
+       SELECT
+        u.id,
+        u.user_number,
+        u.user_name,
+        u.user_sex,
+        u.user_phone,
+        u.created_date,
+        r.role_name
+       FROM
+        USER
+        u,role
+        r,User_Role ur
+       WHERE
+        u.`user_ep_id`
+       IN
+        (SELECT id FROM Enter_Prise WHERE Enter_Prise.`id` = #{epId})
+       AND u.id=ur.user_id AND r.id=ur.role_id AND user_status=0
+    </select>
+
+    <!-- 按部门id查询所有该企业用户 -->
+    <select id="getUserFindDepartmentId" resultMap="userMap">
+         SELECT u.id,u.user_number,u.user_name,u.user_sex,u.user_phone,u.created_date,r.role_name
+         FROM USER u,role r,User_Role ur
+         WHERE u.`user_ep_id` IN (SELECT id FROM Enter_Prise WHERE Enter_Prise.`id`=#{epId})
+         AND u.id=ur.user_id AND r.id=ur.role_id AND user_status=0 AND department_id=#{departmentId}
+    </select>
+
+    <!-- 通过角色id 查询用户 -->
+    <select id="getRoleUserFindRoleId" resultMap="userMap">
+        SELECT u.id,u.user_number,u.user_name,u.user_sex,u.user_phone,u.created_date,r.role_name
+        FROM USER u,role r,User_Role ur WHERE u.`user_ep_id` IN (SELECT id FROM Enter_Prise WHERE Enter_Prise.`id`=#{epId})
+        AND u.id=ur.user_id AND r.id=ur.role_id AND user_status=0 AND u.`user_roleid`=#{userRoleid}
+    </select>
+
+    <!-- 根据用户名查询-->
+    <select id="getUserFindUserName" resultMap="userMap">
+         SELECT u.id,u.user_number,u.user_name,u.user_sex,u.user_phone,u.created_date,r.role_name
+         FROM USER u,role r,User_Role ur WHERE u.`user_ep_id` IN (SELECT id FROM Enter_Prise WHERE Enter_Prise.`id`=#{epId})
+         AND u.id=ur.user_id AND r.id=ur.role_id AND user_status=0 AND u.`user_name` LIKE '%' #{userName} '%'
+    </select>
+
+    <!--登录-->
+    <select id="login"  resultMap="userMap">
+         SELECT
+          id,
+          user_number,
+          user_name,
+          user_phone,
+          user_pwd,
+          user_ep_id
+        FROM
+          USER
+        WHERE
+          user_phone=#{userPhone}
+        AND
+          user_status=0
+    </select>
+
+    <!-- 查询用户个人信息- 通过账号查询-->
+    <select id="findUserInfoByPhone" resultMap="userMap">
+         SELECT u.id,
+         u.user_number,
+         u.user_name,
+         u.head_img_url,
+         u.user_sex,
+         u.user_phone,
+         user_ep_id,
+         ep.id,
+         ep_name,
+         dep.department_name
+         FROM USER u INNER JOIN enter_prise ep ON ep.id=u.user_ep_id
+         INNER JOIN department dep ON u.department_id=dep.id
+         WHERE u.user_phone=#{userPhone}
+    </select>
+
+    <!--用户注册-->
+    <insert id="insertUserInfo">
+         INSERT INTO `User`(user_name,user_sex,user_pwd,user_phone)
+         VALUES(#{userName},#{userSex},#{userPwd},#{userPhone})
+    </insert>
+
+    <!-- 判断用户名和账号是否重复-->
+    <select id="findPhoneAll" resultMap="userMap">
+        SELECT COUNT(*) AS 'count',id,user_ep_id FROM USER WHERE user_phone=#{phone}
+    </select>
+
+    <!-- 通过id添加用户的企业id-->
+    <update id="addUserEpId">
+        UPDATE USER SET user_ep_id=#{userEpId} WHERE id=#{id}
+    </update>
+
+    <!-- 员工离职-用户的企业id为0-->
+    <update id="userQuit">
+         UPDATE `user` SET user_ep_id=0 WHERE id=#{id}
+    </update>
+</mapper>

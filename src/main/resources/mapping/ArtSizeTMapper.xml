@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.ArtSizeTMapper" >
+  <resultMap id="ArtSizeTMap" type="com.ruiheng.entity.ArtSizeT" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="art_size_num" property="artSizeNum" jdbcType="VARCHAR" />
+    <result column="art_size" property="artSize" jdbcType="VARCHAR" />
+    <result column="cre_user" property="creUser" jdbcType="VARCHAR" />
+    <result column="cre_date" property="creDate" jdbcType="TIMESTAMP" />
+    <result column="upd_user" property="updUser" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="chk_user" property="chkUser" jdbcType="VARCHAR" />
+    <result column="chk_date" property="chkDate" jdbcType="TIMESTAMP" />
+    <result column="cfm_user" property="cfmUser" jdbcType="VARCHAR" />
+    <result column="cfm_date" property="cfmDate" jdbcType="TIMESTAMP" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="rec_status" property="recStatus" jdbcType="INTEGER" />
+    <result column="rec_id" property="recId" jdbcType="VARCHAR" />
+    <result column="rec_ltd" property="recLtd" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 查询父级分类-->
+  <select id="getArtSizeTparent" resultMap="ArtSizeTMap">
+      SELECT id,art_size FROM art_size_t WHERE parent_id=0 AND art_size_num=#{artSizeNum}
+  </select>
+
+  <!-- 查询尺码-->
+  <select id="getAllSize" resultMap="ArtSizeTMap">
+     SELECT * FROM art_size_t WHERE parent_id=#{parentId}
+  </select>
+  <!-- 添加尺码-公司自定义 -->
+  <insert id="addSize">
+    INSERT INTO art_size_t(art_size,rec_ltd) VALUES(#{artSize},#{recLtd})
+  </insert>
+
+  <!-- 查询重复添加公司尺码-->
+  <select id="findReSize" resultType="integer">
+    SELECT COUNT(*) FROM art_size_t WHERE art_size=#{artSize} AND rec_ltd=#{recLtd}
+  </select>
+
+</mapper>

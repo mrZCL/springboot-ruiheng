@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.BasColorTMapper" >
+  <resultMap id="BasColorTMap" type="com.ruiheng.entity.BasColorT" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="color_type" property="colorType" jdbcType="VARCHAR" />
+    <result column="color_no" property="colorNo" jdbcType="VARCHAR" />
+    <result column="color_cn_desc" property="colorCnDesc" jdbcType="VARCHAR" />
+    <result column="color_en_desc" property="colorEnDesc" jdbcType="VARCHAR" />
+    <result column="color_std" property="colorStd" jdbcType="VARCHAR" />
+    <result column="color_expires_date" property="colorExpiresDate" jdbcType="TIMESTAMP" />
+    <result column="color_memo" property="colorMemo" jdbcType="VARCHAR" />
+    <result column="cre_user" property="creUser" jdbcType="VARCHAR" />
+    <result column="cre_date" property="creDate" jdbcType="TIMESTAMP" />
+    <result column="upd_user" property="updUser" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="chk_user" property="chkUser" jdbcType="VARCHAR" />
+    <result column="chk_date" property="chkDate" jdbcType="TIMESTAMP" />
+    <result column="cfm_user" property="cfmUser" jdbcType="VARCHAR" />
+    <result column="cfm_date" property="cfmDate" jdbcType="TIMESTAMP" />
+    <result column="rec_status" property="recStatus" jdbcType="INTEGER" />
+    <result column="rec_id" property="recId" jdbcType="VARCHAR" />
+    <result column="rec_ltd" property="recLtd" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 查询颜色-->
+  <select id="getBasColorT" resultMap="BasColorTMap">
+    SELECT id,color_cn_desc
+    FROM bas_color_t WHERE rec_status=1 AND rec_ltd=0
+  </select>
+
+  <!-- 添加颜色-->
+  <insert id="addBascolor">
+    INSERT INTO bas_color_t(color_cn_desc,rec_ltd) VALUES(#{colorCnDesc},#{recLtd})
+  </insert>
+
+  <!-- 判断重复颜色 -->
+  <select id="getReColor" resultType="integer">
+    SELECT COUNT(*) FROM bas_color_t WHERE color_cn_desc = #{colorCnDesc} AND rec_ltd=0
+  </select>
+
+  <!-- 判断该公司添加重复颜色 -->
+  <select id="getReColorId" resultType="integer">
+    SELECT COUNT(*) FROM bas_color_t WHERE color_cn_desc = #{colorCnDesc} AND rec_ltd=#{recLtd}
+  </select>
+</mapper>

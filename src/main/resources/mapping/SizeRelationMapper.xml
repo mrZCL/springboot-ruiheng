@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.SizeRelationMapper" >
+    <resultMap id="RegionMap" type="com.ruiheng.entity.SizeRelation" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="art_no" property="artNo" jdbcType="VARCHAR" />
+        <result column="art_size" property="artSize" jdbcType="VARCHAR" />
+        <result column="rec_status" property="recStatus" jdbcType="INTEGER" />
+        <result column="rec_id" property="recId" jdbcType="VARCHAR" />
+        <result column="rec_ltd" property="recLtd" jdbcType="VARCHAR" />
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <!-- 添加尺码关联-->
+    <insert id="addSizeRelation">
+        INSERT INTO size_relation(art_no,art_size,rec_ltd) VALUES(#{artNo},#{artSize},#{recLtd})
+    </insert>
+
+    <!-- 查询款式尺码- 通过款式id-->
+    <select id="findSizeRelationByArtNo" resultMap="RegionMap">
+          SELECT art_size FROM size_relation sr INNER JOIN art_desc_t adt ON sr.art_no=adt.id WHERE adt.id=#{artNo}
+    </select>
+</mapper>

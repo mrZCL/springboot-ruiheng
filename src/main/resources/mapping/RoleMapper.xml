@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.RoleMapper" >
+  <resultMap id="RoleMapper" type="com.ruiheng.entity.Role" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="available" property="available" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="ep_id" property="epId" jdbcType="INTEGER" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 显示所有父级目录-->
+  <select id="getRoleParentAll" resultMap="RoleMapper">
+     SELECT id,role_name,(SELECT COUNT(*) FROM role WHERE role.`parent_id`=par.id AND role.`ep_id`=#{epId} AND role.`status`=1) AS 'count',parent_id
+     FROM Role par WHERE parent_id=0 AND par.ep_id=#{epId} AND par.status=1
+  </select>
+  <!-- 通过parId显示所有子角色目录 -->
+  <select id="getRolefindParId" resultMap="RoleMapper">
+     SELECT id,role_name,description,(SELECT COUNT(*) FROM User_Role WHERE  role_id = par.id AND ep_id=#{epId} AND User_Role.`status`=1) AS 'count'
+     FROM role par WHERE parent_id = #{parentId} AND ep_id=#{epId} AND par.status=1
+  </select>
+
+    <!-- 角色添加 -->
+    <insert id="addRole">
+        INSERT INTO role(role_name,parent_id,ep_id)
+        VALUES(#{roleName},#{parentId},#{epId})
+    </insert>
+
+    <!-- 修改角色名称-->
+    <update id="updateRoleName">
+        UPDATE role SET role_name = #{roleName} WHERE id = #{id}
+    </update>
+
+    <!-- 修改角色状态为2表示在用户界面删除-->
+    <update id="updateRoleStatus">
+        UPDATE Role SET `status`=2 WHERE id=#{id}
+    </update>
+
+    <!-- 查询用户角色-通过用户id查询-->
+    <select id="findRoleByUserId" resultMap="RoleMapper">
+         SELECT r.id,r.role_name
+         FROM user_role ur
+         INNER JOIN role r
+         ON ur.role_id=r.id
+         WHERE ur.user_id=#{userId}
+    </select>
+</mapper>

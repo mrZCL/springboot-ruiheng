@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.EnterPriseMapper" >
+  <resultMap id="EnterPriseMap" type="com.ruiheng.entity.Enter_Prise" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ep_id" property="epId" jdbcType="INTEGER" />
+    <result column="ep_name" property="epName" jdbcType="VARCHAR" />
+    <result column="ep_people" property="epPeople" jdbcType="VARCHAR" />
+    <result column="ep_sex" property="epSex" jdbcType="INTEGER" />
+    <result column="ep_pwd" property="epPwd" jdbcType="VARCHAR" />
+    <result column="ep_region" property="epRegion" jdbcType="INTEGER" />
+    <result column="ep_address" property="epAddress" jdbcType="VARCHAR" />
+    <result column="ep_phone" property="epPhone" jdbcType="VARCHAR" />
+    <result column="ep_code" property="epCode" jdbcType="VARCHAR" />
+    <result column="ep_type" property="epType" jdbcType="VARCHAR" />
+    <result column="ep_status" property="epStatus" jdbcType="INTEGER" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 企业注册 -->
+  <insert id="addEnterPriseMapper">
+    CALL info(#{epPeople},#{epSex},#{epPwd},#{epPhone},#{epName},#{epAddress})
+  </insert>
+
+  <!-- 通过企业名称查id-->
+  <select id="queryEnterPriseId" resultMap="EnterPriseMap">
+      SELECT id,ep_phone FROM Enter_Prise WHERE ep_name=#{epName}
+  </select>
+
+    <!-- 判断企业手机账号是否重复-->
+  <select id="findReEnterPrisePhone" resultType="integer">
+      select count(*) from enter_prise
+      where ep_phone=#{epPhone}
+  </select>
+
+  <!-- 判断企业名称是否重复-->
+  <select id="findReEnterPriseName" resultType="integer">
+        SELECT COUNT(*) FROM enter_prise
+        WHERE ep_name=#{epName}
+  </select>
+  
+  <!-- 添加企业的客户-->
+  <insert id="addEnterPriseClient">
+    INSERT INTO enter_prise(ep_name,ep_address,ep_phone,ep_people,ep_code,ep_type) VALUES(#{epName},#{epAddress},#{epPhone},#{epPeople},#{epCode},#{epType})
+  </insert>
+  
+  <select id="findByEpType" resultMap="EnterPriseMap">
+      SELECT * FROM enter_prise WHERE ep_type=#{epType}
+  </select>
+</mapper>

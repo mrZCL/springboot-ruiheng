@@ -1,0 +1,37 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/ruiheng?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+mybatis:
+  ##扫描Mapper文件
+  mapper-locations: classpath:mapping/*.xml
+  #扫描实体类
+  type-aliases-package: com.ruiheng.entity
+
+#配置swagger
+swagger:
+  basePackage: com.ruiheng.controller
+  title: 接口API
+  description: 接口文档
+  version: V 1.0
+
+#配置pagehelper分页插件:
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+jwt:
+  config:
+    key: ruiheng-zcl
+    ttl: 3600000
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruiheng.mapper.DepartmentMapper" >
+  <resultMap id="DepartmentMapper" type="com.ruiheng.entity.Department" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="ep_id" property="epId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 查询改公司下的所有部门 -->
+  <select id="getAllDepartment" resultMap="DepartmentMapper">
+    SELECT id,Department_name, (SELECT COUNT(*) FROM USER WHERE Department_id = Department.`id` AND user.`user_status`=0 AND user.`user_ep_id`=#{epId}) AS 'count',parent_id
+    FROM Department WHERE parent_id=0 AND `status`=1 AND ep_id=#{epId}
+  </select>
+
+  <!-- 添加部门 -->
+  <insert id="addDepartment">
+     INSERT INTO department(department_name,parent_id,ep_id)
+     VALUES(#{departmentName},#{parentId},#{epId})
+  </insert>
+
+  <!-- 通过部门id修改部门名称-->
+  <update id="updateDepartmentName">
+    UPDATE department SET department_name = #{departmentName} WHERE id = #{id}
+  </update>
+
+  <!-- 修改部门状态1有效2删除-->
+  <update id="updateDepartmentFindId">
+    UPDATE Department SET `status`=2 WHERE id=#{id}
+  </update>
+</mapper>
