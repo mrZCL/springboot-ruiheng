@@ -1,9 +1,11 @@
 package com.ruiheng.service.impl;
 
 import com.ruiheng.entity.ArtDescT;
+import com.ruiheng.entity.SysUomT;
 import com.ruiheng.mapper.ArtColorTMapper;
 import com.ruiheng.mapper.ArtDescTMapper;
 import com.ruiheng.mapper.SizeRelationMapper;
+import com.ruiheng.mapper.SysUomTMapper;
 import com.ruiheng.service.ArtDescTService;
 import com.ruiheng.utils.result.Result;
 import com.ruiheng.utils.result.ResultCode;
@@ -37,12 +39,17 @@ public class ArtDescTServiceImpl implements ArtDescTService {
     @Autowired
     private SizeRelationMapper sizeRelationMapper;
 
+    /**
+     * 工序表操作
+     */
+    @Autowired
+    private SysUomTMapper sysUomTMapper;
 
     /**
      * 添加公司款式
      */
     @Transactional
-    public Result<Integer> addArtDescT(ArtDescT artDescT,String[] colorList,String[] sizeList) {
+    public Result<Integer> addArtDescT(ArtDescT artDescT, String[] colorList, String[] sizeList, List<SysUomT> sysUomTList) {
         //通过编号查询是否有重复,2个参数公司id
         ArtDescT flag = artDescTMapper.findArtDescTByArtNo(artDescT.getArtNo(),artDescT.getRecLtd());
         if (flag.getCount() > 0){
@@ -61,6 +68,11 @@ public class ArtDescTServiceImpl implements ArtDescTService {
                     }
                     for (String integer : sizeList) {
                         sizeRelationMapper.addSizeRelation(artId.getId().toString(),integer,artId.getRecLtd());//通过产品款式id关联尺码表+尺码是循环数组
+                    }
+                    for (SysUomT sysUomT : sysUomTList) {
+                        sysUomT.setUomCode(artId.getId().toString());//添加款式id
+                        sysUomT.setRecLtd(artId.getRecLtd());//添加公司id
+                        sysUomTMapper.addSysUom(sysUomT);
                     }
                     return new Result(ResultCode.SUCCESS,"产品所有关联成功!");
                 }else{

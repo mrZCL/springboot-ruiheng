@@ -3,6 +3,7 @@ package com.ruiheng.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ruiheng.entity.ArtDescT;
+import com.ruiheng.entity.SysUomT;
 import com.ruiheng.service.ArtDescTService;
 import com.ruiheng.utils.result.Result;
 import io.swagger.annotations.Api;
@@ -26,8 +27,9 @@ public class ArtDescTController {
 
     @PostMapping("/addArtDescT")
     @ApiOperation("添加款式方法,颜色和尺码是个数组")
-    public Result<Integer> addArtDescT(@RequestBody ArtDescT artDescT, String[] colorList, String[] sizeList){
-        return artDescTService.addArtDescT(artDescT,colorList,sizeList);
+    public Result<Integer> addArtDescT(ArtDescT artDescT, String[] colorList, String[] sizeList,@RequestBody List<SysUomT> sysUomTList){
+        System.out.println("进入添加款式方法");
+        return artDescTService.addArtDescT(artDescT,colorList,sizeList,sysUomTList);
     }
 
     /**
@@ -38,6 +40,13 @@ public class ArtDescTController {
     public String findByRecLtdAll(String recLtd){
         List<ArtDescT> list = artDescTService.findByRecLtdAll(recLtd);
         return JSON.toJSONString(list);
+    }
+
+    @PostMapping("/add")
+    public String add(ArtDescT artDescT,@RequestBody List<SysUomT> sysUomTList){
+        System.out.println(artDescT);
+        System.out.println(sysUomTList);
+        return null;
     }
 
 }

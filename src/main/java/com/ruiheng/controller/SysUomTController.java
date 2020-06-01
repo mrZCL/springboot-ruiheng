@@ -58,13 +58,4 @@ public class SysUomTController {
         return sysUomTService.addUomNameByRecLtd(uomName,recLtd);
     }
 
-    @PostMapping("/add")
-    @ApiOperation("测试")
-    public String add(@RequestBody List<SysUomT> list,@RequestParam("integers")Integer[] integers){
-        System.out.println("list"+list);
-        for (SysUomT sysUomT : list) {
-            System.out.println("属性值:"+sysUomT.getCreUser());
-        }
-        return null;
-    }
 }

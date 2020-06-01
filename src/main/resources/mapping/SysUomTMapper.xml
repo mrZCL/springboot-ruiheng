@@ -7,6 +7,7 @@
     <result column="uom_name" property="uomName" jdbcType="VARCHAR" />
     <result column="uom_desc" property="uomDesc" jdbcType="VARCHAR" />
     <result column="num_flag" property="numFlag" jdbcType="TINYINT" />
+    <result column="processing_time" property="processingTime" jdbcType="INTEGER" />
     <result column="flag" property="flag" jdbcType="TINYINT" />
     <result column="uom_type" property="uomType" jdbcType="INTEGER" />
     <result column="uom_price" property="uomPrice" jdbcType="DECIMAL" />
@@ -50,4 +51,11 @@
   <select id="findByrecLtd" resultMap="SysUomTMap">
     SELECT id,uom_name FROM sys_uom_t WHERE uom_type=1 AND rec_ltd=#{recLtd}
   </select>
+
+  <!-- 添加款式工序-->
+  <insert id="addSysUom">
+      INSERT INTO sys_uom_t
+      (uom_code,uom_name,processing_time,uom_price,num_flag,flag,uom_desc,rec_ltd)
+      VALUES(#{uomCode},#{uomName},#{processingTime},#{uomPrice},#{numFlag},#{flag},#{uomDesc},#{recLtd})
+  </insert>
 </mapper>

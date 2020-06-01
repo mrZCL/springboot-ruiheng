@@ -11,7 +11,7 @@
     <result column="art_oth_no" property="artOthNo" jdbcType="VARCHAR" />
     <result column="art_fab_desc" property="artFabDesc" jdbcType="VARCHAR" />
     <result column="art_fab_short_type" property="artFabShortType" jdbcType="VARCHAR" />
-    <result column="art__barcode" property="artBarcode" jdbcType="VARCHAR" />
+    <result column="art_barcode" property="artBarcode" jdbcType="VARCHAR" />
     <result column="art_uom" property="artUom" jdbcType="VARCHAR" />
     <result column="art_remark" property="artRemark" jdbcType="VARCHAR" />
     <result column="art_en_desc" property="artEnDesc" jdbcType="VARCHAR" />
@@ -101,6 +101,7 @@
   <!-- 款式管理- 显示所有公司的款式-->
   <select id="findByRecLtdAll" resultMap="ArtDescTMap">
     SELECT
+    id,
     img_url,
     art_no,
     art_desc,

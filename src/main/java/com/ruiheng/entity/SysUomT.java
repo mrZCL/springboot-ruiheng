@@ -23,6 +23,11 @@ public class SysUomT implements Serializable, AuthCachePrincipal {
     private String uomName;
 
     /**
+     * 加工时间(秒)
+     */
+    private Integer processingTime;
+
+    /**
      * 单价
      */
     private BigDecimal uomPrice;

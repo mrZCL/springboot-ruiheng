@@ -36,4 +36,9 @@ public interface SysUomTMapper {
      * 查询私有公司的车种工序-通过公司id
      */
     List<SysUomT> findByrecLtd(@Param("recLtd")String recLtd);
+
+    /**
+     * 添加款式工序-指定公司和款式编号
+     */
+    Integer addSysUom(SysUomT sysUomT);
 }
